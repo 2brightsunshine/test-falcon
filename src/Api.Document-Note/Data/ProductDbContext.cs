@@ -5,12 +5,19 @@ namespace Api.Document_Note.Data;
 
 public class ProductDbContext : DbContext
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ProductDbContext"/> class with the specified database context options.
+    /// </summary>
     public ProductDbContext(DbContextOptions<ProductDbContext> options) : base(options)
     {
     }
 
     public DbSet<Product> Products { get; set; }
 
+    /// <summary>
+    /// Configures the entity model for the Product entity, including property constraints, default values, and indexes.
+    /// </summary>
+    /// <param name="modelBuilder">The builder used to construct the entity model for the context.</param>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);

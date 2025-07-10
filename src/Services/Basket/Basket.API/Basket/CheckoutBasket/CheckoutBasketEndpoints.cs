@@ -1,10 +1,14 @@
-﻿namespace Basket.API.Basket.CheckoutBasket;
+namespace Basket.API.Basket.CheckoutBasket;
 
 public record CheckoutBasketRequest(BasketCheckoutDto BasketCheckoutDto);
 public record CheckoutBasketResponse(bool IsSuccess);
 
 public class CheckoutBasketEndpoints : ICarterModule
 {
+    /// <summary>
+    /// Registers the HTTP POST endpoint for basket checkout operations.
+    /// </summary>
+    /// <param name="app">The endpoint route builder used to configure routes.</param>
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         app.MapPost("/basket/checkout", async (CheckoutBasketRequest request, ISender sender) =>
