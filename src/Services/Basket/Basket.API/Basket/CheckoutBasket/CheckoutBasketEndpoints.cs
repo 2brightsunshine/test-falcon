@@ -3,8 +3,6 @@
 public record CheckoutBasketRequest(BasketCheckoutDto BasketCheckoutDto);
 public record CheckoutBasketResponse(bool IsSuccess);
 
-/// <summary>
-/// Endpoint for checking out a basket.
 public class CheckoutBasketEndpoints : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)

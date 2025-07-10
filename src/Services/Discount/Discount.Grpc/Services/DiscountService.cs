@@ -6,6 +6,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Discount.Grpc.Services;
 
+/// <summary>
+///  DiscountService is a gRPC service that provides methods to manage discounts.
+/// </summary>
+/// <param name="dbContext"></param>
+/// <param name="logger"></param>
 public class DiscountService
     (DiscountContext dbContext, ILogger<DiscountService> logger)
     : DiscountProtoService.DiscountProtoServiceBase
