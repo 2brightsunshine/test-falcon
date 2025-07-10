@@ -3,35 +3,42 @@ using Api.Document_Note.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Api.Document_Note;
+namespace Api.Document_Note.Controllers;
 
-public class ProductsController(IProductService productService) : Controller
+[ApiController]
+[Route("api/[controller]")]
+public class ProductsController : ControllerBase
 {
-    // GET
+    private readonly ICustomProductService _customProductService;
+
+    public ProductsController(ICustomProductService customProductService)
+    {
+        _customProductService = customProductService;
+    }
+
     [HttpGet]
     public IActionResult Index()
     {
-        return View();
+        return Ok("Products API is running");
     }
 
-    [HttpGet("api/products")]
+    [HttpGet("GetProducts")]
     public async Task<IActionResult> GetProducts(string subAccountId)
     {
         if (string.IsNullOrWhiteSpace(subAccountId))
         {
-            return await Task.FromResult<IActionResult>(BadRequest("SubAccountId cannot be null or empty."));
+            return BadRequest("SubAccountId cannot be null or empty.");
         }
-        var result = await productService.GetProductsAsync(subAccountId);
-       
+        
+        var result = await _customProductService.GetProductsAsync(subAccountId);
         return Ok(result);
     }
     
+    [HttpPost("PostProducts")]
     [Authorize]
-    [HttpPost("api/products")]
-    public async Task<IActionResult> PostProducts(string subAccountId, Product productRequest)
+    public async Task<IActionResult> PostProducts(string subAccountId, [FromBody] Product productRequest)
     {
-        var result = await productService.CreateProductAsync(productRequest);
-        
+        var result = await _customProductService.CreateProductAsync(productRequest);
         return Ok(result);
     }
 }
