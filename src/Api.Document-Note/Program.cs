@@ -1,11 +1,12 @@
 using Api.Document_Note.Data;
 using Api.Document_Note.Repo;
+using Api.Document_Note.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -15,6 +16,12 @@ builder.Services.AddDbContext<ProductDbContext>(options =>
 
 // Add repositories
 builder.Services.AddScoped<IProductRepository, ProductRepo>();
+
+// Add services
+builder.Services.AddScoped<ICustomProductService, CustomProductService>();
+
+// Add logging
+builder.Services.AddLogging();
 
 var app = builder.Build();
 
@@ -26,7 +33,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseAuthorization();
+app.MapControllers();
 
 app.Run();
-
